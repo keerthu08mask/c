@@ -1,0 +1,285 @@
+QUESTION 11 : Mr. Ram is developing a software application to manage his inventory, which initially can hold a maximum of ten product packets. He allocates memory for ten packets at the start. However, as the market demand changes, he needs to dynamically update the allocated memory to store more or fewer packets without wasting memory or running out of space. Explain the concept of dynamic memory allocation and how Mr. Ram can effectively manage his inventory size using this concept.
+
+ANSWER:
+
+Dynamic memory allocation is a process that allows programs to request and manage memory at runtime, which is particularly useful when the size of the data structure is not known at compile time. This concept enables developers to allocate memory as needed and release it when it's no longer in use, allowing for efficient utilization of system resources.
+
+For Mr. Ram's inventory management application, dynamic memory allocation can be implemented as follows:
+
+1. Initial Allocation:
+At the start, Mr. Ram can allocate an array or a similar data structure capable of holding ten product packets. This can be done using functions like malloc in C or similar functions in other programming languages, which allocate a specified amount of memory from the heap.
+
+2. Managing Memory Dynamically:
+To handle varying market demands, Mr. Ram can employ the following strategies:
+
+Increasing Capacity: When the inventory needs to store more than the initially allocated packets, Mr. Ram can:
+
+Use realloc in C or equivalent operations in other languages to resize the allocated memory block. For example, if he wants to expand to 20 packets, he can pass the current pointer and the new size to realloc. This allows the system to allocate a larger block of memory while preserving existing data.
+Decreasing Capacity: If the demand decreases, and there’s excess memory allocated (say above the current number of packets), Mr. Ram can shrink the memory allocation using the same realloc method. This helps in freeing up unused memory, optimizing resource utilization.
+
+3. Keeping Track of Inventory:
+Mr. Ram might want to maintain a variable that keeps track of the current number of packets and another for the allocated size. This way, he can ensure that he only calls for reallocation when the number of packets exceeds the current allocated size or falls significantly below it (to reduce memory waste).
+
+4. Memory Management Best Practices:
+Check for NULL: After every allocation or reallocation, it’s important to check if the memory allocation was successful by ensuring the pointer is not NULL.
+Freeing Memory: When the application is done using the memory, Mr. Ram should use appropriate functions (like free in C) to release the allocated memory, preventing memory leaks.
+Choosing the Right Data Structure: Depending on the operations performed on the inventory (adding, removing, searching), choosing between arrays, linked lists, or other dynamic data structures can be beneficial for performance and memory management.
+Conclusion:
+By utilizing dynamic memory allocation effectively, Mr. Ram can create a flexible inventory management system that adapts to changing demands while ensuring optimal memory use. This approach will help him maintain a robust application without the pitfalls of fixed-size memory allocation.
+
+
+QUESTION 12: Mr. John is playing the game Subway Surfers. The game has a total of five treasures with different weights, that he needs to collect. Write a C program to count the total number of weights he collected from the treasures during the game.
+
+ANSWER:
+
+#include <stdio.h>
+
+int main() {
+    // Declare an array to hold the weights of the treasures
+    float weights[5];
+    float totalWeight = 0.0;
+
+    // Prompt the user to enter the weights of the treasures
+    printf("Enter the weights of the 5 treasures collected:\n");
+
+    // Loop to collect weights
+    for (int i = 0; i < 5; i++) {
+        printf("Weight of treasure %d: ", i + 1);
+        scanf("%f", &weights[i]);
+        totalWeight += weights[i]; // Add the weight to totalWeight
+    }
+
+    // Display the total weight
+    printf("\nTotal weight of treasures collected: %.2f\n", totalWeight);
+
+    return 0;
+}
+
+
+
+QUESTION 13 : Consider an object Shape that encompasses both a Sq 3/5 a Rectangle as the data members. The Square object should nave an attribute for its area, while the Rectangle object should have attributes for length and breadth. Identify the most suitable data structures for this scenario and write a C program to define the structure and demonstrate their usage.
+
+ANSWER:
+
+To represent a Shape object that encompasses both a Square and a Rectangle, we can use C structures. The Square structure can have an attribute for its area, while the Rectangle structure will have attributes for length and breadth. These structures can then be included within a parent structure Shape.
+
+Structures Definition:
+
+Square: Contains attributes for the side and area.
+Rectangle: Contains attributes for length, breadth, and area.
+Shape: Contains an instance of both Square and Rectangle.
+Area Calculation Functions:
+
+calculateSquareArea: Calculates the area of the square.
+calculateRectangleArea: Calculates the area of the rectangle.
+Main Function:
+
+The program prompts the user to enter the side length of a square and the dimensions of a rectangle.
+It invokes the area calculation functions and displays the results.
+
+PROGRAM:
+
+#include <stdio.h>
+
+// Structure to represent a Square
+typedef struct {
+    float side;       // Length of a side of the square
+    float area;       // Area of the square
+} Square;
+
+// Structure to represent a Rectangle
+typedef struct {
+    float length;     // Length of the rectangle
+    float breadth;    // Breadth of the rectangle
+    float area;       // Area of the rectangle
+} Rectangle;
+
+// Structure to represent a Shape that contains a Square and a Rectangle
+typedef struct {
+    Square square;
+    Rectangle rectangle;
+} Shape;
+
+// Function to calculate area of square
+void calculateSquareArea(Square *sq) {
+    sq->area = sq->side * sq->side;
+}
+
+// Function to calculate area of rectangle
+void calculateRectangleArea(Rectangle *rect) {
+    rect->area = rect->length * rect->breadth;
+}
+
+int main() {
+    // Create an instance of Shape
+    Shape shape;
+
+    // Input values for Square
+    printf("Enter the side length of the square: ");
+    scanf("%f", &shape.square.side);
+    calculateSquareArea(&shape.square);
+    printf("Area of the square: %.2f\n", shape.square.area);
+
+    // Input values for Rectangle
+    printf("Enter the length and breadth of the rectangle:\n");
+    printf("Length: ");
+    scanf("%f", &shape.rectangle.length);
+    printf("Breadth: ");
+    scanf("%f", &shape.rectangle.breadth);
+    calculateRectangleArea(&shape.rectangle);
+    printf("Area of the rectangle: %.2f\n", shape.rectangle.area);
+
+    return 0;
+}
+
+
+QUESTION 14: In a classroom, the teacher wants to create a list of students who have submitted their assignments. As students submit their work, the teacher needs to add each student's name to the list in the order of submission. Help the teacher by guiding them on how to use a proper data structure to insert each student's name into the list as they submit their assignment. Write a C program that uses an array to manage the list and demonstrates how to insert new student names into the array.
+
+ANSWER: 
+
+To manage the list of students who have submitted their assignments, an array can be a useful data structure. In this program, we will demonstrate how to:
+
+Define a maximum number of students.
+Use an array to store student names.
+Allow the teacher to insert new student names into the array as they submit their assignments.
+
+PROGRAM:
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STUDENTS 100  // Maximum number of students
+
+int main() {
+    char students[MAX_STUDENTS][50]; // Array to hold student names (up to 50 characters each)
+    int count = 0;                   // Counter for the number of students
+
+    while (1) {
+        // Check if we've reached the maximum number of students
+        if (count >= MAX_STUDENTS) {
+            printf("Maximum student limit reached. Cannot accept more submissions.\n");
+            break;
+        }
+
+        // Prompt for student name
+        char name[50];
+        printf("Enter the student's name (or type 'exit' to finish): ");
+        fgets(name, sizeof(name), stdin); // Gets the name including spaces
+        name[strcspn(name, "\n")] = 0;    // Remove newline character
+
+        // Check for exit condition
+        if (strcmp(name, "exit") == 0) {
+            break;
+        }
+
+        // Add the student's name to the array
+        strcpy(students[count], name); // Copy the name into the array
+        count++; // Increment the count of students
+
+        // Display current list of submissions
+        printf("Current submissions:\n");
+        for (int i = 0; i < count; i++) {
+            printf("%d: %s\n", i + 1, students[i]);
+        }
+    }
+
+    printf("Final list of submitted students:\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d: %s\n", i + 1, students[i]);
+    }
+
+    return 0;
+}
+
+
+QUESTION 15: Students need to check the availability of a book in the library based on its ID. Create an ordered list which will contain only book id. Implement a C program to search whether a particular book is available in the list or not.
+
+ANSWER:
+
+#include <stdio.h>
+
+#define MAX_BOOKS 100 // Maximum number of books
+
+// Function to perform binary search
+int binarySearch(int books[], int size, int bookID) {
+    int left = 0;
+    int right = size - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        // Check if bookID is present at mid
+        if (books[mid] == bookID) {
+            return mid; // Book found
+        }
+        
+        // If bookID is greater, ignore left half
+        if (books[mid] < bookID) {
+            left = mid + 1;
+        }
+        // If bookID is smaller, ignore right half
+        else {
+            right = mid - 1;
+        }
+    }
+
+    return -1; // Book not found
+}
+
+int main() {
+    // Example ordered list of book IDs
+    int books[MAX_BOOKS] = {101, 203, 305, 406, 507, 608, 709, 810}; // Predefined ordered list of book IDs
+    int size = 8; // Number of books in the list
+    int bookID;
+
+    // Input the book ID to search for
+    printf("Enter the book ID to check its availability: ");
+    scanf("%d", &bookID);
+
+    // Searching for the book ID
+    int result = binarySearch(books, size, bookID);
+
+    if (result != -1) {
+        printf("Book with ID %d is available in the library.\n", bookID);
+    } else {
+        printf("Book with ID %d is not available in the library.\n", bookID);
+    }
+
+    return 0;
+}
+
+
+QUESTION 16 :  A=[3424] B=[1234]
+Write a C program to perform Matrix addition for the above two matrices.
+
+ANSWER:
+
+#include <stdio.h>
+
+#define ROWS 1  // Number of rows
+#define COLS 4  // Number of columns
+
+int main() {
+    // Define matrices A and B
+    int A[ROWS][COLS] = {{3424}};
+    int B[ROWS][COLS] = {{1234}};
+    int C[ROWS][COLS];  // Result matrix
+
+    // Perform matrix addition
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            C[i][j] = A[i][j] + B[i][j];  // Element-wise addition
+        }
+    }
+
+    // Display the result matrix C
+    printf("Resultant Matrix C (A + B):\n");
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
