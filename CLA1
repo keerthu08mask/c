@@ -283,3 +283,462 @@ int main() {
 
     return 0;
 }
+
+
+QUESTION 17(A):  Create a structure for student data base with following members (Register number, Name, Age, CGPA), Write a C program to perform the following operations (i) Get user input for 5 students record (ii) Find the student's name with greatest CGPA.
+
+ANSWER:
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STUDENTS 100  // Maximum number of students
+
+int main() {
+    char students[MAX_STUDENTS][50]; // Array to hold student names (up to 50 characters each)
+    int count = 0;                   // Counter for the number of students
+
+    while (1) {
+        // Check if we've reached the maximum number of students
+        if (count >= MAX_STUDENTS) {
+            printf("Maximum student limit reached. Cannot accept more submissions.\n");
+            break;
+        }
+
+        // Prompt for student name
+        char name[50];
+        printf("Enter the student's name (or type 'exit' to finish): ");
+        fgets(name, sizeof(name), stdin); // Gets the name including spaces
+        name[strcspn(name, "\n")] = 0;    // Remove newline character
+
+        // Check for exit condition
+        if (strcmp(name, "exit") == 0) {
+            break;
+        }
+
+        // Add the student's name to the array
+        strcpy(students[count], name); // Copy the name into the array
+        count++; // Increment the count of students
+
+        // Display current list of submissions
+        printf("Current submissions:\n");
+        for (int i = 0; i < count; i++) {
+            printf("%d: %s\n", i + 1, students[i]);
+        }
+    }
+
+    printf("Final list of submitted students:\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d: %s\n", i + 1, students[i]);
+    }
+
+    return 0;
+}
+
+
+QUESTION 17(B):  (i) Illustrate how asymptotic notations can be used to analyze an algorithm?
+(ii) Calculate time and space complexity for the following code
+(ii) #include<stdio.h>
+main() { int
+int i=1, sum = 0, n;
+while (i<= n) { i=i+1; sum = sum +i; }}
+
+ANSWER:
+
+(i) Asymptotic Notations for Analyzing Algorithms
+Asymptotic notation is used in computer science to describe the performance or complexity of an algorithm. It provides a way to express the running time (or space) as a function of the input size 
+n
+n in terms of upper bounds (worst-case), lower bounds (best-case), and average bounds.
+
+The three most common asymptotic notations are:
+
+Big O Notation (O):
+
+Represents the upper bound of the running time of an algorithm.
+Provides a worst-case scenario.
+Example: 
+O
+(
+n
+2
+)
+O(n 
+2
+ ) indicates that in the worst case, the running time grows quadratically with the input size.
+Omega Notation (Ω):
+
+Represents the lower bound of the running time of an algorithm.
+Provides a best-case scenario.
+Example: 
+Ω
+(
+n
+)
+Ω(n) indicates that in the best case, the running time will not be less than linear with the input size.
+Theta Notation (Θ):
+
+Represents a tight bound on the running time.
+Both the upper and lower bounds are the same, signifying that 
+f
+(
+n
+)
+f(n) is approximately equal to 
+g
+(
+n
+)
+g(n) for sufficiently large 
+n
+n.
+Example: 
+Θ
+(
+n
+log
+⁡
+n
+)
+Θ(nlogn) implies that the running time grows logarithmically to the linear size of the input.
+Usage in Algorithm Analysis
+Analyzing an algorithm's performance involves determining its time complexity and space complexity using these notations. For instance:
+
+A sorting algorithm might take different times to sort various types of data; hence analyzing it under different input conditions using Big O, Omega, and Theta helps understand its efficiency comprehensively.
+Consider a function that iterates through a list and performs operations; by counting the number of iterations and understanding the operations' complexity, we can summarize the algorithm's efficiency.
+(ii) Time and Space Complexity Calculation
+Let's analyze the provided code snippet:
+
+c
+
+Copy
+#include<stdio.h>
+
+main() {
+    int i = 1, sum = 0, n;
+
+    while (i <= n) {
+        i = i + 1;
+        sum = sum + i;
+    }
+}
+Time Complexity Analysis
+Initialization:
+
+int i = 1;: Constant time, 
+O
+(
+1
+)
+O(1)
+int sum = 0;: Constant time, 
+O
+(
+1
+)
+O(1)
+int n;: Constant time, 
+O
+(
+1
+)
+O(1)
+While Loop:
+
+The while loop condition i <= n is checked.
+Inside the loop, both i = i + 1; and sum = sum + i; execute.
+Initially, 
+i
+i starts at 1 and increments until it reaches 
+n
++
+1
+n+1. Therefore, the loop will run 
+n
+n times.
+Total Time Complexity:
+
+Since the loop runs 
+n
+n times and each iteration performs constant work 
+O
+(
+1
+)
+O(1), the overall time complexity is:
+O
+(
+n
+)
+O(n)
+Space Complexity Analysis
+Variables:
+
+The code uses a fixed number of integer variables (i, sum, and n), which occupy constant space.
+Total Space Complexity:
+
+Since the space used does not depend on the input size 
+n
+n, the overall space complexity is:
+O
+(
+1
+)
+O(1)
+Summary
+Time Complexity: 
+O
+(
+n
+)
+O(n)
+Space Complexity: 
+O
+(
+1
+)
+O(1)
+
+
+QUESTION 18(A):  Given a number 'n', write an algorithm and the subsequent 'C' program to count the number of two-digit primenumbers in it when adjacent digits are taken. For example, if the value of 'n' is 114 then the two-digit numbers that can be formed by taking adjacent digits are 11 and 14. 11 is prime but 14 is not. Therefore print 1.
+
+ANSWER:
+
+To solve the problem of counting the number of two-digit prime numbers that can be formed from adjacent digits of a given number 
+n
+n, we'll follow these steps:
+
+Convert the number 
+n
+n to a string to facilitate the extraction of adjacent digits.
+Form two-digit numbers from adjacent digits.
+Check if each two-digit number is prime.
+Count the number of prime two-digit numbers and print the result.
+Algorithm
+Read the integer 
+n
+n.
+Convert 
+n
+n to a string to access the individual digits conveniently.
+Initialize a counter for prime numbers.
+Loop through the string from the first digit to the second last digit:
+Form a two-digit number from the current digit and the next digit.
+Convert the two-digit number from string to integer.
+Check if the two-digit number is prime:
+A prime number is only divisible by 1 and itself.
+Iterate from 2 to the square root of the number and check for factors.
+Return the count of prime numbers found.
+
+PROGRAM:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+
+// Function to check if a number is prime
+int isPrime(int num) {
+    if (num < 2) return 0; // 0 and 1 are not prime numbers
+    for (int i = 2; i <= sqrt(num); i++) {
+        if (num % i == 0) {
+            return 0; // Not a prime number
+        }
+    }
+    return 1; // Is a prime number
+}
+
+int main() {
+    long long n; // Use long long to accommodate large input numbers
+    printf("Enter a number: ");
+    scanf("%lld", &n);
+
+    // Convert number to string for easy digit access
+    char strNum[20]; // Make sure it's long enough to hold all digits
+    sprintf(strNum, "%lld", n);
+
+    int primeCount = 0; // Initialize prime counter
+    int length = strlen(strNum);
+
+    // Loop through adjacent digits
+    for (int i = 0; i < length - 1; i++) {
+        // Form a two-digit number
+        int twoDigitNumber = (strNum[i] - '0') * 10 + (strNum[i + 1] - '0');
+
+        // Check if the two-digit number is prime
+        if (isPrime(twoDigitNumber)) {
+            primeCount++;
+        }
+    }
+
+    // Print the number of prime two-digit numbers
+    printf("The number of two-digit prime numbers formed by adjacent digits is: %d\n", primeCount);
+    
+    return 0;
+}
+
+
+QUESTION 18(B):  Demonstrate the usage of list and perform all the possible operation using array with suitable examples
+
+ANSWERS:
+
+In C, the concept of lists can be represented in various ways, such as arrays or linked lists. Since your request mentions "array," I'll focus on operations performed on arrays. Here’s an overview of various operations you can perform on arrays in C, along with examples for each operation.
+
+Operations on Arrays
+Initialization
+Insertion
+Deletion
+Traversal
+Searching
+Sorting
+
+PROGRAM:
+
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// Function prototypes
+void insert(int arr[], int* n, int value, int position);
+void delete(int arr[], int* n, int position);
+void traverse(int arr[], int n);
+int search(int arr[], int n, int key);
+void sort(int arr[], int n);
+
+int main() {
+    int arr[MAX_SIZE];
+    int n = 0; // Current size of the array
+
+    // Insertion
+    printf("Inserting elements into the array:\n");
+    insert(arr, &n, 10, 0); // Insert 10 at position 0
+    insert(arr, &n, 20, 1); // Insert 20 at position 1
+    insert(arr, &n, 30, 2); // Insert 30 at position 2
+    traverse(arr, n); // Current state of the array
+
+    // Deletion
+    printf("\nDeleting element at position 1:\n");
+    delete(arr, &n, 1); // Delete element at position 1
+    traverse(arr, n); // Current state of the array
+
+    // Searching
+    printf("\nSearching for the element 20:\n");
+    int index = search(arr, n, 20);
+    if (index != -1) {
+        printf("Element 20 found at index: %d\n", index);
+    } else {
+        printf("Element 20 not found.\n");
+    }
+
+    // Sorting
+    printf("\nSorting the array:\n");
+    insert(arr, &n, 15, n); // Insert 15 at the end
+    insert(arr, &n, 25, n); // Insert 25 at the end
+    sort(arr, n);
+    traverse(arr, n); // Sorted state of the array
+
+    return 0;
+}
+
+// Function to insert an element at a specified position
+void insert(int arr[], int* n, int value, int position) {
+    if (*n >= MAX_SIZE) {
+        printf("Array is full. Cannot insert more elements.\n");
+        return;
+    }
+    if (position < 0 || position > *n) {
+        printf("Invalid position. Insertion not performed.\n");
+        return;
+    }
+
+    for (int i = *n; i > position; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[position] = value;
+    (*n)++;
+    printf("Inserted %d at position %d.\n", value, position);
+}
+
+// Function to delete an element at a specified position
+void delete(int arr[], int* n, int position) {
+    if (*n <= 0) {
+        printf("Array is empty. Cannot delete.\n");
+        return;
+    }
+    if (position < 0 || position >= *n) {
+        printf("Invalid position. Deletion not performed.\n");
+        return;
+    }
+
+    for (int i = position; i < *n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    (*n)--;
+    printf("Deleted element at position %d.\n", position);
+}
+
+// Function to traverse and print the array
+void traverse(int arr[], int n) {
+    if (n == 0) {
+        printf("Array is empty.\n");
+        return;
+    }
+    printf("Current array elements: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Function to search for an element in the array
+int search(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return i; // Element found, return index
+        }
+    }
+    return -1; // Element not found
+}
+
+// Function to sort the array using bubble sort
+void sort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    printf("Array sorted.\n");
+}
+
+Explanation of the Code
+Insert Function:
+
+Inserts a value at the specified position in the array.
+Shifts existing elements to the right to make space for the new value.
+Delete Function:
+
+Deletes the element at a specified position.
+Shifts remaining elements to the left to fill the gap.
+Traverse Function:
+
+Prints all elements in the array.
+Search Function:
+
+Searches for a specified key in the array and returns the index if found, otherwise returns -1.
+Sort Function:
+
+Sorts the array using the bubble sort algorithm.
+Example Usage
+When you run the program, it will demonstrate the following:
+
+Insertion of elements into the array.
+Printing out the current state of the array.
+Deletion of an element and printing the updated array.
+Searching for a specific element and returning its index.
+Sorting the array and printing the sorted result.
+Conclusion
+This program shows the fundamental operations on arrays in C, including insertion, deletion, traversal, searching, and sorting, which are essential for managing a list-like structure in programming. The array data structure is useful for storing and manipulating a collection of elements sequentially.
